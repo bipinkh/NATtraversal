@@ -1,3 +1,5 @@
+package ice;
+
 /*
  * ice4j, the OpenSource Java Solution for NAT and Firewall Traversal.
  *
@@ -30,7 +32,7 @@ import org.opentelecoms.javax.sdp.*;
  * not</b> try to act smart and make a lot of assumptions (e.g. at least one
  * media stream with at least one component) that may not always be true in real
  * life and lead to exceptions. Therefore, make sure you reread the code if
- * reusing it in an application. It should be fine for the purposes of our ice4j
+ * reusing it in an application. It should be fine for the purposes of our ice
  * examples though.
  *
  * @author Emil Ivov

@@ -1,3 +1,5 @@
+package ice;
+
 /**
  * @author bipin khatiwada
  * github.com/bipinkh
@@ -24,8 +26,12 @@ public class StateListener implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         if(evt.getSource() instanceof Agent){
             Agent agent = (Agent) evt.getSource();
+
+            System.out.println("Agent state changed to " + agent.getState());
+
             if(agent.getState().equals(IceProcessingState.TERMINATED)) {
                 // Your agent is connected. Terminated means ready to communicate
+                System.out.println("Agent Connected");
                 for (IceMediaStream stream: agent.getStreams()) {
                     if (stream.getName().contains("audio")) {
                         Component rtpComponent = stream.getComponent(org.ice4j.ice.Component.RTP);
@@ -43,8 +49,6 @@ public class StateListener implements PropertyChangeListener {
 
 /*** lets send a packet now ***/
                         DatagramPacket packet = new DatagramPacket(new byte[10000],10000);
-                        packet.setAddress(hostname);
-                        packet.setPort(port);
                         try {
                             wrapper.send(packet);
                             System.out.println("Sent data successful !");

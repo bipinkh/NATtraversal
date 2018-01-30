@@ -1,0 +1,16 @@
+
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.(çç¹±ûÿÿÿÿ8º³ê¥”,
+Hsquid:S1068",Remove this unused "hostname" private field.(á½‰â8Ù¥–§”,
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.(‚«É­ıÿÿÿÿ8º³ê¥”,
+S
+squid:S106"9Replace this use of System.out or System.err by a logger.(Úî88º³ê¥”,
+ssquid:S1450"WRemove the "hostname" field and declare it as a local variable in the relevant methods.(á½‰â8º³ê¥”,
+ssquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(ğéËøÿÿÿÿ8º³ê¥”,
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.(»ˆ–Šıÿÿÿÿ8º³ê¥”,
+Y
+squid:S106"9Replace this use of System.out or System.err by a logger.(šô©Ÿûÿÿÿÿ8º³ê¥”,
+T
+squid:S106"9Replace this use of System.out or System.err by a logger.(¡éÈ8º³ê¥”,
