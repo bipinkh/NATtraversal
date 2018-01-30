@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class ice4jagent2 {
 
 
-    public static void runAgent() throws Throwable {
+    public static void main(String[] args) throws Throwable {
         Agent agent = new Agent();
 
 /*** Setup the STUN servers: ***/
@@ -47,11 +47,11 @@ public class ice4jagent2 {
 /*** lets connect ***/
         String toSend = SdpUtils.createSDPDescription(agent); //Each computer sends this information
         // This information describes all the possible IP addresses and ports
-        SDPinfo.setSdp2(toSend);
-        TimeUnit.SECONDS.sleep(15);
+        JsonService.storeJson("sdp2",toSend);
+        TimeUnit.SECONDS.sleep(10);
 
-        System.out.println("SDP1 :: "+ SDPinfo.sdp1);
-        String remoteReceived = SDPinfo.sdp1; // This information was grabbed from the server, and shouldn't be empty.
+        // This information was grabbed from the server. For now, we use a constant value of iceagent.java agent
+        String remoteReceived = JsonService.readJson("sdp1");;
         SdpUtils.parseSDP(agent, remoteReceived); // This will add the remote information to the agent.
 
         System.out.println("Agent2 State: "+ agent.getState());

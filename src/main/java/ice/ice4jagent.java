@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ice4jagent {
 
-    public static void runAgent() throws Throwable {
+    public static void main(String[] args) throws Throwable {
         Agent agent = new Agent(); // A simple ICE Agent
 
 /*** Setup the STUN servers: ***/
@@ -46,15 +46,15 @@ public class ice4jagent {
 /*** lets connect ***/
         String toSend = SdpUtils.createSDPDescription(agent); //Each computer sends this information
         // This information describes all the possible IP addresses and ports
-        SDPinfo.setSdp1(toSend);
-        TimeUnit.SECONDS.sleep(15);
 
-        /**
-         * now go and run ice4jagent2.main() and wait 1 minute. or, you can decrease time to wait in above delay
-         * */
+        //for instance, we suppose storing the sdp in local json file is like storing the sdp information in a
+        //server or a dht from where another agent can access it. for now, another agent will read it from local
+        //json file
+        JsonService.storeJson("sdp1",toSend);
+        TimeUnit.SECONDS.sleep(15);     //now run iceagent2.java and wait for connection
 
-        System.out.println("SDP2 :: "+ SDPinfo.sdp2);
-        String remoteReceived = SDPinfo.sdp2; // This information was grabbed from the server, and shouldn't be empty.
+        // This information was grabbed from the server. For now, we use a constant value of iceagent.java agent
+        String remoteReceived = JsonService.readJson("sdp2"); // This information was grabbed from the server, and shouldn't be empty.
         SdpUtils.parseSDP(agent, remoteReceived); // This will add the remote information to the agent.
 
         System.out.println("Agent State: "+ agent.getState());
