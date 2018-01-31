@@ -7,6 +7,7 @@ import org.ice4j.socket.IceSocketWrapper;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.util.Arrays;
 
 /**
  * @author bipin khatiwada
@@ -50,7 +51,16 @@ public class UdpMessageService {
         } catch (IOException e) {
             System.out.println("Error receiving packet : " + e.getMessage());
         }
-        return rpacket.getData();
+        return trim(rpacket.getData());
+    }
+
+    //to trim the trailing zeros in the byte array
+    static byte[] trim(byte[] bytes)
+    {
+        int i = bytes.length - 1;
+        while (i >= 0 && bytes[i] == 0)
+            --i;
+        return Arrays.copyOf(bytes, i + 1);
     }
 
 }
