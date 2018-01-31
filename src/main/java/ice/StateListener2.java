@@ -60,6 +60,8 @@ public class StateListener2 implements PropertyChangeListener {
 /*** lets send the reply ***/
                         buf = "hi there".getBytes();
                         DatagramPacket packet = new DatagramPacket(buf, buf.length);
+                        packet.setAddress(hostname);
+                        packet.setPort(port);
                         try {
                             wrapper.send(packet);
                             System.out.println("Sent reply successful ::  "+ new String(packet.getData()));
