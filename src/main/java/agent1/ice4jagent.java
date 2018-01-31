@@ -1,5 +1,7 @@
-package ice;
+package agent1;
 
+import utils.JsonService;
+import utils.SdpUtils;
 import org.ice4j.Transport;
 import org.ice4j.TransportAddress;
 import org.ice4j.ice.Agent;
@@ -13,11 +15,10 @@ import java.util.concurrent.TimeUnit;
  * @author bipin khatiwada
  * github.com/bipinkh
  */
-public class ice4jagent2 {
-
+public class ice4jagent {
 
     public static void main(String[] args) throws Throwable {
-        Agent agent = new Agent();
+        Agent agent = new Agent(); // A simple ICE Agent
 
 /*** Setup the STUN servers: ***/
         String[] hostnames = new String[] {"jitsi.org","numb.viagenie.ca","stun.ekiga.net"};
@@ -39,7 +40,7 @@ public class ice4jagent2 {
 
 /*** now, lets create a media stream ***/
         IceMediaStream stream = agent.createMediaStream("audio");
-        int port = 8100; // Choose any port
+        int port = 8000; // Choose any port
         agent.createComponent(stream, Transport.UDP, port, port, port+100);
         // The three last arguments are: preferredPort, minPort, maxPort
 
@@ -47,16 +48,21 @@ public class ice4jagent2 {
 /*** lets connect ***/
         String toSend = SdpUtils.createSDPDescription(agent); //Each computer sends this information
         // This information describes all the possible IP addresses and ports
-        JsonService.storeJson("sdp2",toSend);
+
+        //for instance, we suppose storing the sdp in local json file is like storing the sdp information in a
+        //server or a dht from where another agent can access it. for now, another agent will read it from local
+        //json file
+        JsonService.storeJson("sdp1",toSend);
+        TimeUnit.SECONDS.sleep(10);     //now run iceagent2.java and wait for connection
 
         // This information was grabbed from the server. For now, we use a constant value of iceagent.java agent
-        String remoteReceived = JsonService.readJson("sdp1");
+        String remoteReceived = JsonService.readJson("sdp2"); // This information was grabbed from the server, and shouldn't be empty.
         SdpUtils.parseSDP(agent, remoteReceived); // This will add the remote information to the agent.
 
-        System.out.println("Agent2 State: "+ agent.getState());
+        System.out.println("Agent State: "+ agent.getState());
 
 /*** lets start the connection ***/
-        agent.addStateChangeListener(new StateListener2());
+        agent.addStateChangeListener(new StateListener());
         // You need to listen for state change so that once connected you can then use the socket.
         agent.startConnectivityEstablishment(); // This will do all the work for you to connect
     }

@@ -1,4 +1,4 @@
-package ice;
+package utils;
 
 /*
  * ice4j, the OpenSource Java Solution for NAT and Firewall Traversal.
