@@ -39,7 +39,7 @@ public class ice4jagent2 {
 
 /*** now, lets create a media stream ***/
         IceMediaStream stream = agent.createMediaStream("audio");
-        int port = 6000; // Choose any port
+        int port = 8100; // Choose any port
         agent.createComponent(stream, Transport.UDP, port, port, port+100);
         // The three last arguments are: preferredPort, minPort, maxPort
 
@@ -48,16 +48,15 @@ public class ice4jagent2 {
         String toSend = SdpUtils.createSDPDescription(agent); //Each computer sends this information
         // This information describes all the possible IP addresses and ports
         JsonService.storeJson("sdp2",toSend);
-        TimeUnit.SECONDS.sleep(10);
 
         // This information was grabbed from the server. For now, we use a constant value of iceagent.java agent
-        String remoteReceived = JsonService.readJson("sdp1");;
+        String remoteReceived = JsonService.readJson("sdp1");
         SdpUtils.parseSDP(agent, remoteReceived); // This will add the remote information to the agent.
 
         System.out.println("Agent2 State: "+ agent.getState());
 
 /*** lets start the connection ***/
-        agent.addStateChangeListener(new StateListener());
+        agent.addStateChangeListener(new StateListener2());
         // You need to listen for state change so that once connected you can then use the socket.
         agent.startConnectivityEstablishment(); // This will do all the work for you to connect
     }

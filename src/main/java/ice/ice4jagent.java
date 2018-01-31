@@ -38,7 +38,7 @@ public class ice4jagent {
 
 /*** now, lets create a media stream ***/
         IceMediaStream stream = agent.createMediaStream("audio");
-        int port = 5000; // Choose any port
+        int port = 8000; // Choose any port
         agent.createComponent(stream, Transport.UDP, port, port, port+100);
         // The three last arguments are: preferredPort, minPort, maxPort
 
