@@ -22,15 +22,11 @@ public class ice4jagent {
 
 /*** Setup the STUN servers: ***/
         String[] hostnames = new String[] {"jitsi.org","numb.viagenie.ca","stun.ekiga.net"};
-        // Look online for actively working public STUN Servers. You can find free servers.
-        // Now add these URLS as Stun Servers with standard 3478 port for STUN servrs.
+
         for(String hostname: hostnames){
             try {
-                // InetAddress qualifies a url to an IP Address, if you have an error here, make sure the url is reachable and correct
                 TransportAddress ta = new TransportAddress(InetAddress.getByName(hostname), 3478, Transport.UDP);
 
-                // Currently Ice4J only supports UDP and will throw an Error otherwise
-                //now, adding the stun servers
                 agent.addCandidateHarvester(new StunCandidateHarvester(ta));
             } catch (Exception e) {
                 System.out.println("Error in setting STUN servers");
@@ -42,12 +38,10 @@ public class ice4jagent {
         IceMediaStream stream = agent.createMediaStream("audio");
         int port = 8000; // Choose any port
         agent.createComponent(stream, Transport.UDP, port, port, port+100);
-        // The three last arguments are: preferredPort, minPort, maxPort
 
 
 /*** lets connect ***/
         String toSend = SdpUtils.createSDPDescription(agent); //Each computer sends this information
-        // This information describes all the possible IP addresses and ports
 
         //for instance, we suppose storing the sdp in local json file is like storing the sdp information in a
         //server or a dht from where another agent can access it. for now, another agent will read it from local
@@ -55,8 +49,7 @@ public class ice4jagent {
         JsonService.storeJson("sdp1",toSend);
         TimeUnit.SECONDS.sleep(10);     //now run iceagent2.java and wait for connection
 
-        // This information was grabbed from the server. For now, we use a constant value of iceagent.java agent
-        String remoteReceived = JsonService.readJson("sdp2"); // This information was grabbed from the server, and shouldn't be empty.
+        String remoteReceived = JsonService.readJson("sdp2");
         SdpUtils.parseSDP(agent, remoteReceived); // This will add the remote information to the agent.
 
         System.out.println("Agent State: "+ agent.getState());

@@ -51,6 +51,9 @@ public class UdpMessageService {
         } catch (IOException e) {
             System.out.println("Error receiving packet : " + e.getMessage());
         }
+
+        //this is just done temporarily to make the output easily readable.
+        //todo : this trimming of trailing zeros will be removed later
         return trim(rpacket.getData());
     }
 
